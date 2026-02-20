@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/dauth/(.*)",
+            "destination": "https://auth.delta.nitt.edu/api/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
