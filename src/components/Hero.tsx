@@ -1,8 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, GraduationCap, Users, Building2, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Hero = () => {
+  const { user, login } = useAuth();
+  const navigate = useNavigate();
+
+  // Smart handler: Login if needed, otherwise navigate
+  const handleNavigation = (path: string) => {
+    if (user) {
+      navigate(path);
+    } else {
+      login(path); // Pass the intended destination to the login function
+    }
+  };
+
   return (
     <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden pt-14">
       {/* Animated background */}
@@ -73,11 +86,14 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-4 animate-fade-in-up"
             style={{ animationDelay: '0.3s' }}
           >
-            <Button variant="hero" size="lg" asChild className="group">
-              <Link to="/student/dashboard">
-                Get Started
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="group"
+              onClick={() => handleNavigation('/student/dashboard')}
+            >
+              Get Started
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
 
@@ -86,25 +102,40 @@ const Hero = () => {
             className="flex flex-wrap gap-2 justify-center items-center animate-fade-in-up"
             style={{ animationDelay: '0.4s' }}
           >
-            <Button variant="ghost" size="sm" asChild className="text-xs hover:bg-primary/10 hover:text-primary transition-all">
-              <Link to="/student/dashboard" className="flex items-center gap-1.5">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-xs hover:bg-primary/10 hover:text-primary transition-all"
+              onClick={() => handleNavigation('/student/dashboard')}
+            >
+              <div className="flex items-center gap-1.5">
                 <GraduationCap className="w-3.5 h-3.5" />
                 Student
-              </Link>
+              </div>
             </Button>
             <span className="text-border">•</span>
-            <Button variant="ghost" size="sm" asChild className="text-xs hover:bg-accent/10 hover:text-accent transition-all">
-              <Link to="/coordinator/dashboard" className="flex items-center gap-1.5">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-xs hover:bg-accent/10 hover:text-accent transition-all"
+              onClick={() => handleNavigation('/coordinator/dashboard')}
+            >
+              <div className="flex items-center gap-1.5">
                 <Users className="w-3.5 h-3.5" />
                 Coordinator
-              </Link>
+              </div>
             </Button>
             <span className="text-border">•</span>
-            <Button variant="ghost" size="sm" asChild className="text-xs hover:bg-[hsl(200_80%_50%)]/10 hover:text-[hsl(200_80%_50%)] transition-all">
-              <Link to="/recruiter/dashboard" className="flex items-center gap-1.5">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-xs hover:bg-[hsl(200_80%_50%)]/10 hover:text-[hsl(200_80%_50%)] transition-all"
+              onClick={() => handleNavigation('/recruiter/dashboard')}
+            >
+              <div className="flex items-center gap-1.5">
                 <Building2 className="w-3.5 h-3.5" />
                 Recruiter
-              </Link>
+              </div>
             </Button>
           </div>
 

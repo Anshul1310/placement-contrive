@@ -1,8 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+
 const CTA = () => {
-  return <section className="py-8 relative overflow-hidden">
+  const { user, login } = useAuth();
+
+  return (
+    <section className="py-8 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-primary/10 rounded-full blur-[100px]" />
@@ -23,11 +28,24 @@ const CTA = () => {
             Join the most intelligent placement platform and take the first step toward your dream career.
           </p>
 
-          
-
-          
+          <div className="flex justify-center">
+            {user ? (
+              <Button size="lg" asChild className="group">
+                 <Link to="/student/dashboard">
+                   Return to Dashboard
+                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                 </Link>
+              </Button>
+            ) : (
+              <Button size="lg" onClick={login} className="group">
+                Start Now
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
 export default CTA;
