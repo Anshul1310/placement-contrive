@@ -32,10 +32,10 @@ const AuthCallback = () => {
           params.append('client_secret', import.meta.env.VITE_DAUTH_CLIENT_SECRET);
           params.append('grant_type', 'authorization_code');
           params.append('code', code);
-          params.append('redirect_uri', import.meta.env.VITE_DAUTH_REDIRECT_URI);
+          params.append('redirect_uri', `${window.location.origin}/auth/callback`);
 
           // Exchange Code for Token (Using Proxy)
-          const tokenResponse = await fetch("/api/dauth/oauth/token", { 
+          const tokenResponse = await fetch("/api/dauth/oauth/token", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: params,
@@ -56,7 +56,7 @@ const AuthCallback = () => {
           // Save Session
           localStorage.setItem("dauth_user", JSON.stringify(userData));
           setUser(userData);
-          
+
           toast({
             title: "Welcome!",
             description: `Logged in as ${userData.name}`,
@@ -66,7 +66,7 @@ const AuthCallback = () => {
           // Check if we have a saved return path
           const returnTo = sessionStorage.getItem("loginRedirect");
           sessionStorage.removeItem("loginRedirect"); // Clean up
-          
+
           // Navigate to the return path, or default to dashboard
           navigate(returnTo || "/student/dashboard");
 

@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // DAuth Configuration
   const CLIENT_ID = import.meta.env.VITE_DAUTH_CLIENT_ID;
-  const REDIRECT_URI = import.meta.env.VITE_DAUTH_REDIRECT_URI;
+  const REDIRECT_URI = `${window.location.origin}/auth/callback`;
 
   useEffect(() => {
     // Check for existing session
